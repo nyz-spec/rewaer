@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReWear</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: #f5f5f5; color: #111111; scroll-behavior: smooth; }
+  header { background: #111111; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #8B0000; }
+  .logo img { height: 48px; width: auto; display: block; filter: invert(1); }
+  nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+  nav button { background: none; border: none; color: #cccccc; cursor: pointer; font-size: 0.85rem; font-weight: 600; padding: 4px 0; transition: color 0.2s; font-family: inherit; border-bottom: 2px solid transparent; }
+  nav button:hover, nav button.active { color: #ffffff; border-bottom: 2px solid #8B0000; }
+  section { padding: 4rem 2rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .hero { background: #8B0000; text-align: center; padding: 6rem 2rem; }
+  .hero h1 { font-size: 2.8rem; font-weight: 700; line-height: 1.15; margin-bottom: 1rem; color: #ffffff; }
+  .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 2rem; }
+  .hero-btn { background: #ffffff; color: #8B0000; border: none; padding: 0.9rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .hero-btn:hover { background: #111111; color: #ffffff; transform: scale(1.04); }
+  .sec-title { font-size: 2rem; font-weight: 700; color: #8B0000; text-align: center; margin-bottom: 2rem; }
+  .sec-sub { text-align: center; color: #555; margin-top: -1.2rem; margin-bottom: 2rem; font-size: 0.95rem; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.4rem; }
+  .stat-card { background: #ffffff; border: 1px solid #8B0000; border-radius: 10px; padding: 1.5rem; text-align: center; transition: transform 0.2s; }
+  .stat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(139,0,0,0.15); }
+  .stat-num { font-size: 2.2rem; font-weight: 700; color: #8B0000; }
+  .stat-txt { color: #444444; font-size: 0.95rem; margin-top: 0.4rem; }
+  .box { background: #ffffff; border-radius: 10px; padding: 1.5rem; border-left: 4px solid #8B0000; color: #333333; line-height: 1.7; }
+  .sol-card { background: #ffffff; border: 2px solid #dddddd; border-radius: 10px; overflow: hidden; transition: all 0.2s; }
+  .sol-card:hover { border-color: #8B0000; transform: translateY(-4px); }
+  .sol-img { width: 100%; height: 170px; object-fit: cover; display: block; }
+  .sol-body { padding: 1.2rem; }
+  .sol-body h3 { color: #8B0000; font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .sol-body p { color: #444444; font-size: 0.95rem; }
+  .obj-box { background: #ffffff; border: 1px solid #8B0000; border-radius: 10px; padding: 2rem; text-align: center; }
+  .obj-box p { color: #222222; font-size: 1.1rem; line-height: 1.8; }
+  .product-card { background: #ffffff; border: 2px solid #dddddd; border-radius: 10px; overflow: hidden; transition: all 0.2s; }
+  .product-card:hover { border-color: #8B0000; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(139,0,0,0.12); }
+  .product-placeholder { background: #f0f0f0; width: 100%; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1px solid #dddddd; }
+  .product-placeholder p { color: #888888; font-size: 0.78rem; text-align: center; padding: 0 1rem; margin: 0; font-style: italic; }
+  .product-body { padding: 1rem; }
+  .product-body h3 { color: #aaaaaa; font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .product-body .desc { color: #aaaaaa; font-size: 0.85rem; margin-bottom: 0.6rem; }
+  .product-price { color: #aaaaaa; font-size: 1rem; font-weight: 600; }
+  .evento-card { background: #ffffff; border-left: 4px solid #8B0000; border-radius: 10px; padding: 1.2rem 1.5rem; display: flex; gap: 1.2rem; align-items: flex-start; }
+  .evento-data { background: #8B0000; color: #ffffff; border-radius: 8px; padding: 0.5rem 0.8rem; text-align: center; min-width: 56px; flex-shrink: 0; }
+  .evento-data .dia { font-size: 1.4rem; font-weight: 700; line-height: 1; }
+  .evento-data .mes { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .evento-info h3 { color: #111111; font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .evento-info p { color: #555555; font-size: 0.88rem; margin: 0; }
+  .evento-info .local { color: #8B0000; font-size: 0.85rem; font-weight: 600; margin-top: 0.3rem; }
+  .evento-placeholder { background: #ffffff; border: 2px dashed #cccccc; border-radius: 10px; padding: 2.5rem; text-align: center; }
+  .evento-placeholder h3 { color: #aaaaaa; margin-bottom: 0.5rem; font-size: 1.1rem; }
+  .evento-placeholder p { color: #999; font-size: 0.9rem; }
+  .doacao-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+  .step-card { background: #ffffff; border-radius: 10px; padding: 1.5rem; text-align: center; border-top: 4px solid #8B0000; }
+  .step-num { background: #8B0000; color: #ffffff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; margin: 0 auto 0.8rem; }
+  .step-card h3 { color: #111111; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .step-card p { color: #555555; font-size: 0.85rem; margin: 0; }
+  .local-box { background: #ffffff; border: 1px solid #dddddd; border-radius: 12px; padding: 2rem; text-align: center; }
+  .local-box .local-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .local-box h3 { color: #111111; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .local-box p { color: #555555; font-size: 1rem; margin: 0; }
+  .local-box .a-combinar { color: #8B0000; font-size: 1.3rem; font-weight: 700; margin-top: 0.6rem; }
+  .video-wrap { position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 12px; overflow: hidden; background: #000; margin-bottom: 1.5rem; }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  .quotes { background: #8B0000; border-radius: 10px; padding: 1.5rem 2rem; }
+  .quotes p { color: #ffffff; font-style: italic; font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+  .quotes p:last-child { margin-bottom: 0; }
+  .contato-box { background: #ffffff; border: 1px solid #dddddd; border-radius: 12px; padding: 3rem 2rem; text-align: center; }
+  .contato-box .email-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .contato-box h3 { color: #111111; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .contato-box p { color: #555555; font-size: 0.95rem; margin-bottom: 1.5rem; }
+  .contato-box a.email-link { display: inline-block; background: #8B0000; color: #ffffff; padding: 0.9rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: background 0.2s; }
+  .contato-box a.email-link:hover { background: #600000; }
+  .ref-list { background: #ffffff; border-radius: 10px; padding: 1.5rem; border: 1px solid #dddddd; }
+  .ref-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; }
+  .ref-item:last-child { border-bottom: none; }
+  .ref-icon { color: #8B0000; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0; }
+  .ref-item a { color: #8B0000; font-size: 0.9rem; text-decoration: none; font-weight: 500; }
+  .ref-item a:hover { color: #600000; text-decoration: underline; }
+  footer { background: #111111; border-top: 2px solid #8B0000; padding: 2.5rem 2rem; text-align: center; }
+  footer h3 { color: #8B0000; font-size: 1.5rem; margin-bottom: 0.5rem; }
+  footer p { color: #aaaaaa; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  footer .tagline { color: #ffffff; font-weight: 700; margin-top: 0.8rem; }
+  footer a.footer-email { color: #8B0000; text-decoration: none; font-weight: 600; }
+  .bg-alt { background: #eeeeee; }
+  .cam { font-size: 2rem; margin-bottom: 0.4rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="SUA_LOGO_AQUI.png" alt="ReWear Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+    <span style="display:none; color:#ffffff; font-size:1.4rem; font-weight:700; letter-spacing:0.05em;">RE WEAR</span>
+  </div>
+  <nav>
+    <button onclick="goTo('inicio')" class="active" id="nav-inicio">In&#237;cio</button>
+    <button onclick="goTo('problema')" id="nav-problema">Problema</button>
+    <button onclick="goTo('solucao')" id="nav-solucao">Solu&#231;&#227;o</button>
+    <button onclick="goTo('objetivo')" id="nav-objetivo">Objetivo</button>
+    <button onclick="goTo('vendas')" id="nav-vendas">Vendas</button>
+    <button onclick="goTo('eventos')" id="nav-eventos">Eventos</button>
+    <button onclick="goTo('doacao')" id="nav-doacao">Doa&#231;&#227;o</button>
+    <button onclick="goTo('pitch')" id="nav-pitch">Pitch</button>
+    <button onclick="goTo('contato')" id="nav-contato">Contato</button>
+    <button onclick="goTo('referencias')" id="nav-referencias">Refer&#234;ncias</button>
+  </nav>
+</header>
+
+<div id="inicio" class="hero">
+  <div class="container">
+    <h1>Enquanto o mundo descarta&#8230;<br>n&#243;s transformamos</h1>
+    <p>ReWear: n&#227;o &#233; s&#243; sobre roupas. &#201; sobre mudar o futuro.</p>
+    <button class="hero-btn" onclick="goTo('problema')">Saiba mais &#8595;</button>
+  </div>
+</div>
+
+<section id="problema">
+  <div class="container">
+    <h2 class="sec-title">O Problema</h2>
+    <div class="grid2" style="margin-bottom: 2rem;">
+      <div class="stat-card"><div class="stat-num">1/s</div><div class="stat-txt">A cada segundo, um caminh&#227;o de roupas &#233; descartado no mundo</div></div>
+      <div class="stat-card"><div class="stat-num">92M</div><div class="stat-txt">Toneladas de res&#237;duos t&#234;xteis geradas por ano</div></div>
+      <div class="stat-card"><div class="stat-num">4M</div><div class="stat-txt">Toneladas anuais descartadas apenas no Brasil</div></div>
+      <div class="stat-card"><div class="stat-num">&#8734;</div><div class="stat-txt">Impacto ambiental: polui&#231;&#227;o, enchentes e contamina&#231;&#227;o</div></div>
+    </div>
+    <div class="box">
+      <p style="margin-bottom: 1rem;">A ind&#250;stria da moda gera milh&#245;es de toneladas de res&#237;duos t&#234;xteis todos os anos. Em regi&#245;es como Br&#225;s e Bom Retiro, &#233; comum encontrar tecidos descartados de forma irregular nas ruas.</p>
+      <p style="margin: 0;">Esse ac&#250;mulo contribui para a polui&#231;&#227;o, entupimento de bueiros e aumento de enchentes, enquanto muitas pessoas ainda n&#227;o t&#234;m acesso a roupas ou alternativas sustent&#225;veis.</p>
+    </div>
+  </div>
+</section>
+
+<section id="solucao" class="bg-alt">
+  <div class="container">
+    <h2 class="sec-title">Nossa Solu&#231;&#227;o</h2>
+    <div class="grid3">
+      <div class="sol-card">
+        <img class="sol-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500&h=300&fit=crop" alt="Upcycling" />
+        <div class="sol-body"><h3>Upcycling</h3><p>Transformamos roupas e tecidos descartados em novas pe&#231;as com valor criativo e sustent&#225;vel.</p></div>
+      </div>
+      <div class="sol-card">
+        <img class="sol-img" src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=500&h=300&fit=crop" alt="Eventos e trocas" />
+        <div class="sol-body"><h3>Eventos e Trocas</h3><p>Feiras e pontos de troca incentivam o consumo consciente e criam comunidade.</p></div>
+      </div>
+      <div class="sol-card">
+        <img class="sol-img" src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?w=500&h=300&fit=crop" alt="Oficinas" />
+        <div class="sol-body"><h3>Oficinas</h3><p>Ensinamos reaproveitamento para gerar renda e reduzir desperd&#237;cio de forma acess&#237;vel.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="objetivo">
+  <div class="container">
+    <h2 class="sec-title">Objetivo</h2>
+    <div class="obj-box">
+      <p>Reduzir o descarte t&#234;xtil, incentivar o reaproveitamento e promover um consumo mais consciente e sustent&#225;vel, gerando oportunidades de renda para comunidades.</p>
+    </div>
+  </div>
+</section>
+
+<section id="vendas" class="bg-alt">
+  <div class="container">
+    <h2 class="sec-title">Vendas</h2>
+    <p class="sec-sub">Pe&#231;as &#250;nicas feitas com tecidos reaproveitados &#8212; moda consciente com estilo.</p>
+    <div class="grid3">
+      <div class="product-card"><div class="product-placeholder"><div class="cam">&#128247;</div><p>Depois voc&#234;s me mandam a foto que eu ponho</p></div><div class="product-body"><h3>-----------</h3><p class="desc">-----------</p><div class="product-price">-----------</div></div></div>
+      <div class="product-card"><div class="product-placeholder"><div class="cam">&#128247;</div><p>Depois voc&#234;s me mandam a foto que eu ponho</p></div><div class="product-body"><h3>-----------</h3><p class="desc">-----------</p><div class="product-price">-----------</div></div></div>
+      <div class="product-card"><div class="product-placeholder"><div class="cam">&#128247;</div><p>Depois voc&#234;s me mandam a foto que eu ponho</p></div><div class="product-body"><h3>-----------</h3><p class="desc">-----------</p><div class="product-price">-----------</div></div></div>
+      <div class="product-card"><div class="product-placeholder"><div class="cam">&#128247;</div><p>Depois voc&#234;s me mandam a foto que eu ponho</p></div><div class="product-body"><h3>-----------</h3><p class="desc">-----------</p><div class="product-price">-----------</div></div></div>
+      <div class="product-card"><div class="product-placeholder"><div class="cam">&#128247;</div><p>Depois voc&#234;s me mandam a foto que eu ponho</p></div><div class="product-body"><h3>-----------</h3><p class="desc">-----------</p><div class="product-price">-----------</div></div></div>
+      <div class="product-card"><div class="product-placeholder"><div class="cam">&#128247;</div><p>Depois voc&#234;s me mandam a foto que eu ponho</p></div><div class="product-body"><h3>-----------</h3><p class="desc">-----------</p><div class="product-price">-----------</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="eventos">
+  <div class="container">
+    <h2 class="sec-title">Eventos e Oficinas</h2>
+    <p class="sec-sub">Fique por dentro das nossas pr&#243;ximas atividades.</p>
+    <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+      <div class="evento-card"><div class="evento-data"><div class="dia">--</div><div class="mes">---</div></div><div class="evento-info"><h3>Nome do Evento</h3><p>Descri&#231;&#227;o ser&#225; adicionada em breve.</p><p class="local">&#128205; Local a confirmar</p></div></div>
+      <div class="evento-card"><div class="evento-data"><div class="dia">--</div><div class="mes">---</div></div><div class="evento-info"><h3>Nome da Oficina</h3><p>Descri&#231;&#227;o ser&#225; adicionada em breve.</p><p class="local">&#128205; Local a confirmar</p></div></div>
+      <div class="evento-card"><div class="evento-data"><div class="dia">--</div><div class="mes">---</div></div><div class="evento-info"><h3>Feira de Trocas</h3><p>Data e detalhes ser&#227;o adicionados em breve.</p><p class="local">&#128205; Local a confirmar</p></div></div>
+    </div>
+    <div class="evento-placeholder"><h3>Mais eventos em breve!</h3><p>Acompanhe esta p&#225;gina para saber as pr&#243;ximas datas e locais.</p></div>
+  </div>
+</section>
+
+<section id="doacao" class="bg-alt">
+  <div class="container">
+    <h2 class="sec-title">Como Doar</h2>
+    <p class="sec-sub">Sua roupa parada pode virar uma pe&#231;a nova. Veja como &#233; simples!</p>
+    <div class="doacao-steps">
+      <div class="step-card"><div class="step-num">1</div><h3>Separe as pe&#231;as</h3><p>Roupas, tecidos ou retalhos &#8212; qualquer item t&#234;xtil que voc&#234; n&#227;o usa mais.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h3>Leve ao ponto de coleta</h3><p>Traga at&#233; o nosso ponto de coleta nos dias de evento ou oficina.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>N&#243;s transformamos</h3><p>Seu descarte vira uma pe&#231;a nova, com prop&#243;sito e estilo.</p></div>
+    </div>
+    <div class="local-box">
+      <div class="local-icon">&#128205;</div>
+      <h3>Ponto de coleta</h3>
+      <p>Senac Lapa Tito</p>
+      <p class="a-combinar">Hor&#225;rio: a combinar</p>
+    </div>
+  </div>
+</section>
+
+<section id="pitch">
+  <div class="container">
+    <h2 class="sec-title">Nosso Pitch</h2>
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/qUX6HF4K1rw"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="quotes">
+      <p>&#8220;N&#227;o tratamos lixo como fim, mas como oportunidade.&#8221;</p>
+      <p>&#8220;Enquanto o mundo descarta&#8230; n&#243;s transformamos.&#8221;</p>
+      <p>&#8220;ReWear: n&#227;o &#233; s&#243; sobre roupas. &#201; sobre mudar o futuro.&#8221;</p>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="bg-alt">
+  <div class="container">
+    <h2 class="sec-title">Contato</h2>
+    <p class="sec-sub">D&#250;vidas, parcerias ou doa&#231;&#245;es? Fale com a gente!</p>
+    <div class="contato-box">
+      <div class="email-icon">&#9993;&#65039;</div>
+      <h3>Entre em contato</h3>
+      <p>Respondemos o mais r&#225;pido poss&#237;vel.</p>
+      <a href="mailto:rewearsenac@gmail.com" class="email-link">rewearsenac@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<section id="referencias">
+  <div class="container">
+    <h2 class="sec-title">Refer&#234;ncias e Pesquisas</h2>
+    <div class="ref-list">
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://saaebambiental.sp.gov.br/noticias_saaeb/saaeb-pede-colaboracao-da-populacao-para-evitar-o-descarte-de-lixo-no-esgoto/" target="_blank">SAAEB - Descarte de lixo no esgoto</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://www.youtube.com/watch?v=1BSTpLdz_V8&t=53s" target="_blank">V&#237;deo sobre lixo t&#234;xtil</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://g1.globo.com/sp/sao-paulo/noticia/2026/01/13/lixo-descartado-por-lojas-do-bras-entope-bueiros-e-aumenta-risco-de-alagamentos-na-zona-central-de-sp.ghtml" target="_blank">G1 - Lixo descartado por lojas entope bueiros em SP</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://prefeitura.sp.gov.br/w/prefeitura-inaugura-no-br%C3%A1s-primeiro-ecoponto-exclusivo-para-receber-restos-de-tecido-e-combater-descarte-irregular" target="_blank">Prefeitura SP - Ecoponto exclusivo para tecidos</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://piaui.uol.com.br/em-um-dia-o-lixo-textil-coletado-somente-na-regiao-do-bras-em-sao-paulo-pesa-quase-o-mesmo-que-dois-iates-de-luxo-juntos/" target="_blank">Revista Piau&#237; - Lixo t&#234;xtil na regi&#227;o do Br&#225;s</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://www.uol.com.br/ecoa/ultimas-noticias/2024/03/27/moda-sustentavel.htm" target="_blank">UOL Ecoa - Moda sustent&#225;vel</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://stealthelook.com.br/precisamos-falar-sobre-lixo-textil" target="_blank">Steal the Look - Lixo t&#234;xtil</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://noticias.ambientalmercantil.com/2024/08/economia-circular-na-moda-grandes-empresas-querem-lucrar-sem-produzir-novas-pecas/" target="_blank">Ambiental Mercantil - Economia circular na moda</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://ongteprotejo.org/br/articulos/alem-da-vitrine-o-impacto-do-fast-fashion/" target="_blank">ONG Te Protejo - Impacto do fast fashion</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://www.theguardian.com/global-development/2025/mar/28/atacama-chilean-desert-clothes-dumping-western-fast-fashion-industry" target="_blank">The Guardian - Atacama desert clothes dumping</a></div>
+      <div class="ref-item"><span class="ref-icon">&#8599;</span><a href="https://fastcompanybrasil.com/impacto/neste-natal-evite-comprar-roupa-o-planeta-agradece/" target="_blank">Fast Company Brasil - Impacto ambiental da moda</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h3>ReWear</h3>
+  <p>Projeto Escolar - ReWear 2026</p>
+  <p>Grupo: Ana Carolina | Emilly Bilio | L&#237;via Stainle | Luiz Felipe | Vict&#243;ria Priori | Vitor Miguel</p>
+  <p style="margin-top: 0.5rem;"><a href="mailto:rewearsenac@gmail.com" class="footer-email">rewearsenac@gmail.com</a></p>
+  <p class="tagline">Enquanto o mundo descarta&#8230; n&#243;s transformamos.</p>
+</footer>
+
+<script>
+function goTo(id) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('nav button').forEach(function(b){ b.classList.remove('active'); });
+  var btn = document.getElementById('nav-' + id);
+  if (btn) btn.classList.add('active');
+}
+var sections = ['inicio','problema','solucao','objetivo','vendas','eventos','doacao','pitch','contato','referencias'];
+window.addEventListener('scroll', function() {
+  for (var i = 0; i < sections.length; i++) {
+    var el = document.getElementById(sections[i]);
+    if (!el) continue;
+    var rect = el.getBoundingClientRect();
+    if (rect.top <= 80 && rect.bottom >= 80) {
+      document.querySelectorAll('nav button').forEach(function(b){ b.classList.remove('active'); });
+      var btn = document.getElementById('nav-' + sections[i]);
+      if (btn) btn.classList.add('active');
+      break;
+    }
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>
